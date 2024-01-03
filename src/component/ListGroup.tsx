@@ -1,14 +1,13 @@
 // import { Fragment } from "react";
 import { MouseEvent, useState } from "react";
+// item gọi vào là 'item' và 'heading' để kế thừa
+interface Props {
+  items: string[];
+  heading: string;
+}
 
-function ListGroup() {
-  let items = [
-    'Jazz',
-    'Piano',
-    'Rock',
-    'Saxophone',
-    'Guitar'
-  ];
+function ListGroup({ items, heading}: Props) {
+  
   const [selectedIndex, setSelectedIndex] = useState(-1);
   //Hook
   const arr = useState(-1);
@@ -23,7 +22,7 @@ function ListGroup() {
   // và nếu false && 1 thì reult là "false" 
   return (
     <>
-      <h1>List Song</h1>
+      <h1>{heading}</h1>
       { message }
       <ul className="list-group">
         {/* Ánh xạ danh sách */
