@@ -10,10 +10,12 @@ interface Props {
 function ListGroup({ items, heading, onSelecItem }: Props) {
   
   const [selectedIndex, setSelectedIndex] = useState(-1);
+  
   //Hook
   const arr = useState(-1);
   arr[0] // Variable (selectedIndex)
   arr[1] // Update function
+
   //test giá trị trả về
   const handleClick = (event: MouseEvent) => console.log(event)
   // items = [];
