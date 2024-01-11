@@ -1,6 +1,9 @@
 // import { Fragment } from "react";
 import { MouseEvent, useState } from "react";
 // item gọi vào là 'items' và 'heading' để kế thừa
+import './ListGroup.css'
+
+
 interface Props {
   items: string[];
   heading: string;
@@ -25,9 +28,9 @@ function ListGroup({ items, heading, onSelecItem }: Props) {
   // và nếu false && 1 thì reult là "false" 
   return (
     <>
+      <ul className="list-group">
       <h1>{heading}</h1>
       { message }
-      <ul className="list-group">
         {/* Ánh xạ danh sách */
         items.map((item, index )=>
           <li 
