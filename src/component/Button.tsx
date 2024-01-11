@@ -1,8 +1,14 @@
 import React from 'react'
 
-const Button = () => {
+interface Props{
+  children: string;
+  color?: 'primary' | 'secondary';
+  onclick: () => void;
+}
+
+const Button = ({children, onclick, color="primary" }: Props) => {
   return (
-    <button className='btn btn-primary'>button</button>
+    <button className={'btn btn-' + color} onClick={onclick}>{children}</button>
   )
 }
 
