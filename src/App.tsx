@@ -1,30 +1,57 @@
+import { Box, Flex, Grid, GridItem, HStack, Show } from "@chakra-ui/react";
 import { useState } from "react";
-import Alert from "./component/Alert";
-import ListGroup from "./component/ListGroup";
-import Button from "./component/Button";
+import GameGrid from "./components/GameGrid";
+import GameHeading from "./components/GameHeading";
+import GenreList from "./components/GenreList";
+import NavBar from "./components/NavBar";
+import PlatformSelector from "./components/PlatformSelector";
+import SortSelector from "./components/SortSelector";
+import { Platform } from "./hooks/useGames";
+import { Genre } from "./hooks/useGenres";
 
+
+export interface GameQuery { 
+  genre: Genre | null;
+  platform: Platform | null;
+  sortOrder: string;
+  searchText: string;
+}
 
 function App() {
-  // items tự tạo
-  let items = ["Jazz", "Piano", "Rock", "Saxophone", "Guitar"];
-  let items1: string[] = [] ;
-
-  const handleSelected = (item: string) => {
-    console.log(item);
-    
-  }
-  const [alertVisible, setAlertVisibility ] = useState(false)
+  const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
+  
   return (
-    <div>
-      {/* items kế thừa và heading */}
-      <ListGroup items={items} heading="Rock" onSelecItem={handleSelected}/>
-      <ListGroup items={items1} heading="Jazz" onSelecItem={handleSelected}/>
-      {/* <Alert children=
-      "Hello JavaScript"
-      /> */}
-      {/* {alertVisible && <Alert onClose={() => setAlertVisibility(false)}>Hello</Alert>}
-      <Button color="secondary"  onclick={()=> setAlertVisibility(true)}>My Button</Button> */}
-    </div>
+    <Grid
+      templateAreas={{
+        base: `"nav" "main"`,
+        lg: `"nav nav" "aside main"`,
+      }}
+      templateColumns={{
+        base: '1fr',
+        lg: '250px 1fr'
+      }}
+    >
+      <GridItem area="nav">
+        <NavBar onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })} />
+      </GridItem>
+      <Show above="lg">
+        <GridItem area="aside" paddingX={5}>
+          <GenreList selectedGenre={gameQuery.genre} onSelectGenre={(genre) => setGameQuery({ ...gameQuery, genre})} />
+        </GridItem>
+      </Show>
+      <GridItem area="main">
+        <Box paddingLeft={2}>
+          <GameHeading gameQuery={gameQuery} />
+          <Flex marginBottom={5}>
+            <Box marginRight={5}>
+              <PlatformSelector selectedPlatform={gameQuery.platform} onSelectPlatform={(platform) => setGameQuery({ ...gameQuery, platform}) } />
+            </Box>
+            <SortSelector sortOrder={gameQuery.sortOrder} onSelectSortOrder={(sortOrder) => setGameQuery({ ...gameQuery, sortOrder })} />
+          </Flex>
+        </Box>
+        <GameGrid gameQuery={gameQuery} />
+      </GridItem>
+    </Grid>
   );
 }
 
